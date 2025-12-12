@@ -9,9 +9,9 @@ export default defineConfig({
   format: ["cjs", "esm"],
   dts: true,
   clean: true,
-  sourcemap: true,
+  sourcemap: false,
   treeshake: true,
   splitting: false,
-  minify: false,
+  minify: true,
   external: ["tailwindcss", "tailwind-merge"],
 });
