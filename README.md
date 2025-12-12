@@ -202,8 +202,8 @@ const displayXL: ScaleTuple = SCALE['display-xl'] // [40, 48, 64]
 
 ## License
 
-MIT © [Ayan Ghosh](https://github.com/ayanghosh)
+MIT © [Ayan Ghosh](https://github.com/typescript-any)
 
 ---
 
-**Questions?** [Open an issue](https://github.com/ayanghosh/fluid-typography/issues)
+**Questions?** [Open an issue](https://github.com/typescript-any/fluid-typography/issues)
