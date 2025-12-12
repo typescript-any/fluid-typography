@@ -36,8 +36,10 @@ export default {
 ```tsx
 <h1 className="text-display-xl">Hero Title</h1>
 <h2 className="text-h1">Main Heading</h2>
-<p className="text-body1">Regular paragraph</p>
-<span className="text-caption">Small text</span>
+<h3 className="text-h2">Section Heading</h3>
+<p className="text-body">Regular paragraph text</p>
+<p className="text-body-sm">Smaller body text</p>
+<span className="text-caption">Image caption</span>
 ```
 
 That's it! No configuration needed.
@@ -46,23 +48,31 @@ That's it! No configuration needed.
 
 ## Typography Scale
 
-| Class | Size Range | Weight | Use Case |
-|-------|-----------|--------|----------|
-| `text-display-xl` | 40px → 64px | 700 | Hero titles |
-| `text-display-lg` | 32px → 48px | 700 | Large displays |
-| `text-display` | 28px → 40px | 700 | Display text |
-| `text-h1` | 24px → 32px | 600 | Main headings |
-| `text-h2` | 20px → 24px | 600 | Subheadings |
-| `text-h3` | 16px → 20px | 600 | Section titles |
-| `text-subtitle` | 16px → 20px | 500 | Subtitles |
-| `text-body1` | 16px → 18px | 400 | Body text |
-| `text-body2` | 14px → 16px | 400 | Secondary body |
-| `text-body3` | 12px → 14px | 400 | Small body |
-| `text-caption` | 11px → 12px | 400 | Captions |
-| `text-overline` | 11px → 12px | 600 | Labels (uppercase) |
-| `text-micro` | 10px → 11px | 500 | Tiny text |
+All sizes scale fluidly between **375px (mobile)** and **1440px (desktop)** viewports.
 
-> All sizes scale fluidly between 375px and 1440px viewport widths.
+**Body variants match Tailwind's defaults on desktop** for easy mental mapping:
+- `text-body` = `text-base` (16px) on desktop, scales down to 14px on mobile
+- `text-body-sm` = `text-sm` (14px) on desktop, scales down to 13px on mobile  
+- `text-body-xs` = `text-xs` (12px) on desktop, scales down to 11px on mobile
+
+| Class | Mobile → Desktop | Weight | Use Case |
+|-------|-----------------|--------|----------|
+| **Display (Hero Sections)** |
+| `text-display-2xl` | 48px → 72px | 800 | Massive hero titles |
+| `text-display-xl` | 40px → 60px | 800 | Large hero titles |
+| `text-display-lg` | 32px → 48px | 700 | Medium hero titles |
+| `text-display` | 28px → 36px | 700 | Small hero titles |
+| **Headings** |
+| `text-h1` | 28px → 36px | 700 | Main page headings |
+| `text-h2` | 24px → 30px | 700 | Section headings |
+| `text-h3` | 20px → 24px | 600 | Subsection headings |
+| **Body Text** |
+| `text-body` | 14px → 16px | 400 | Regular paragraphs |
+| `text-body-sm` | 13px → 14px | 400 | Smaller body text |
+| `text-body-xs` | 11px → 12px | 400 | Extra small text |
+| **Small Text** |
+| `text-caption` | 10px → 11px | 400 | Image captions, footnotes |
+| `text-overline` | 10px → 11px | 600 | Labels (uppercase) |
 
 ---
 
@@ -132,6 +142,24 @@ Not in v1. This is intentionally opinionated for zero-config simplicity. If you 
 **Only if you're already using tailwind-merge** in your project (via `cn()` utility or similar). Otherwise, skip it.
 
 ### Does it work with Tailwind v4?
+
+### Can I override the font-weight?
+
+Yes! Font weights are included by default for convenience, but you can override:
+
+```tsx
+<h1 className="text-h1 font-normal">Light heading</h1>
+<p className="text-body font-semibold">Bold paragraph</p>
+```
+
+### Why do body variants match Tailwind defaults?
+
+For easy mental mapping! On desktop:
+- `text-body` = `text-base` (16px)
+- `text-body-sm` = `text-sm` (14px)
+- `text-body-xs` = `text-xs` (12px)
+
+The difference? These scale down on mobile for better readability.
 
 Yes! Use `@plugin "fluid-typography"` in your CSS file (see Quick Start above).
 
