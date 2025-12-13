@@ -48,4 +48,4 @@ jobs:
           git tag "v${NEW_VERSION}"
       
       - name: Push changes
-        run: git push origin main --follow-tags
+        run: git push origin master --follow-tags
