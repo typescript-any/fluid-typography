@@ -1,6 +1,6 @@
 {
   "name": "fluid-typography",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Fluid typography plugin for Tailwind CSS v3 and v4 with built-in tailwind-merge support",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
