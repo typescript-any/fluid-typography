@@ -1,6 +1,8 @@
 # Fluid Typography
 
-> Zero-config fluid typography plugin for Tailwind CSS v3 & v4 with optional customization
+[![npm](https://img.shields.io/npm/v/fluid-typography?style=flat-square)](https://www.npmjs.com/package/fluid-typography) [![Docs](https://img.shields.io/badge/docs-website-blue?style=flat-square)](https://fluid-typography.ayanghosh.in) [![License: MIT](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
+
+> Fluid typography plugin for Tailwind CSS v3 & v4 — responsive, accessible, zero-config, and highly customizable. Uses CSS `clamp()` for smooth scaling across viewports. See full docs: https://fluid-typography.ayanghosh.in/
 
 Responsive typography that scales smoothly between viewports using CSS `clamp()`. Works out-of-the-box with sensible defaults, or customize scales and viewport ranges to match your design system.
 

@@ -35,21 +35,33 @@
   },
   "keywords": [
     "tailwindcss",
-    "tailwind",
-    "plugin",
+    "tailwind-plugin",
     "typography",
-    "fluid",
-    "responsive",
     "fluid-typography",
+    "responsive",
+    "responsive-design",
+    "css-scaling",
+    "font-scaling",
+    "text-scaling",
     "clamp",
+    "design-system",
+    "plugin",
     "css",
+    "web-design",
     "tailwind-merge"
   ],
-  "author": "Ayan Ghosh",
+  "author": {
+    "name": "Ayan Ghosh",
+    "url": "https://ayanghosh.in"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/typescript-any/fluid-typography"
+  },
+  "homepage": "https://fluid-typography.ayanghosh.in",
+  "bugs": {
+    "url": "https://github.com/typescript-any/fluid-typography/issues"
   },
   "devDependencies": {
     "@types/react": "^19.2.7",
