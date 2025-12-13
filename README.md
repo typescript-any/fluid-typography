@@ -1,8 +1,8 @@
 # Fluid Typography
 
-> Zero-config fluid typography plugin for Tailwind CSS v3 & v4
+> Zero-config fluid typography plugin for Tailwind CSS v3 & v4 with optional customization
 
-Responsive typography that scales smoothly between 375px and 1440px viewports using CSS `clamp()`.
+Responsive typography that scales smoothly between viewports using CSS `clamp()`. Works out-of-the-box with sensible defaults, or customize scales and viewport ranges to match your design system.
 
 **✨ Install → Add to config → Done**
 
@@ -46,6 +46,111 @@ That's it! No configuration needed.
 
 ---
 
+## Customization (Optional)
+
+### Add Custom Typography Scales
+
+Extend the default scales with your own:
+
+```ts
+// tailwind.config.ts
+import fluidTypography from 'fluid-typography'
+
+export default {
+  plugins: [
+    fluidTypography({
+      customScales: {
+        'hero': {
+          size: [50, 80],  // [minPx, maxPx]
+          lineHeight: 1.1,  // Optional, defaults to 1.5
+          fontWeight: '900',  // Optional, defaults to '400'
+          letterSpacing: '-0.02em',  // Optional
+          textTransform: 'uppercase'  // Optional: 'uppercase' | 'lowercase' | 'capitalize'
+        },
+        'mega': {
+          size: [60, 120]  // Only size is required
+        }
+      }
+    })
+  ]
+}
+```
+
+Use your custom scales:
+
+```tsx
+<h1 className="text-hero">Custom Hero</h1>
+<h1 className="text-mega">Mega Text</h1>
+```
+
+### Customize Viewport Range
+
+Change the min/max viewport widths (default: 375px → 1440px):
+
+```ts
+import fluidTypography from 'fluid-typography'
+
+export default {
+  plugins: [
+    fluidTypography({
+      minViewportWidth: 320,   // Scale from 320px
+      maxViewportWidth: 1920   // Scale to 1920px
+    })
+  ]
+}
+```
+
+### Combine Both
+
+```ts
+import fluidTypography from 'fluid-typography'
+
+export default {
+  plugins: [
+    fluidTypography({
+      customScales: {
+        'hero': {
+          size: [50, 80],
+          fontWeight: '900'
+        }
+      },
+      minViewportWidth: 320,
+      maxViewportWidth: 1920
+    })
+  ]
+}
+```
+
+### Tailwind v4 with Customization
+
+```js
+// tailwind.config.js
+import fluidTypography from 'fluid-typography';
+
+export default {
+  plugins: [
+    fluidTypography({
+      customScales: {
+        'hero': {
+          size: [50, 80],
+          fontWeight: '900'
+        }
+      },
+      minViewportWidth: 320,
+      maxViewportWidth: 1920
+    })
+  ]
+};
+```
+
+```css
+/* app.css */
+@import "tailwindcss";
+@config "./tailwind.config.js";
+```
+
+---
+
 ## Typography Scale
 
 All sizes scale fluidly between **375px (mobile)** and **1440px (desktop)** viewports.
@@ -78,51 +183,51 @@ All sizes scale fluidly between **375px (mobile)** and **1440px (desktop)** view
 
 ## tailwind-merge Integration
 
-### If You Have an Existing `cn` Utility
+### Basic Setup
 
-Most projects have a `cn` utility like this:
-
-```ts
-// lib/utils.ts
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
-
-export function cn(...inputs: ClassValue[]) {
-    return twMerge(clsx(inputs));
-}
-```
-
-**Update it to support fluid typography:**
+If you use `tailwind-merge`, extend it to support fluid typography classes:
 
 ```ts
 // lib/utils.ts
 import { clsx, type ClassValue } from "clsx";
 import { extendTailwindMerge } from "tailwind-merge";
-import { withFluidTypography } from "fluid-typography/merge";
+import { getFluidTypographyMergeConfig } from "fluid-typography/merge";
 
 // Create extended merge
-const twMerge = extendTailwindMerge(withFluidTypography);
+const twMerge = extendTailwindMerge(getFluidTypographyMergeConfig());
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
 }
 ```
 
-**That's it!** Your existing code continues to work, now with proper merging:
+### With Custom Scales
 
-```tsx
-cn('text-body1 text-h1') // => 'text-h1' ✅
-cn('text-display-xl font-bold text-body2') // => 'text-body2 font-bold' ✅
-```
-
-### If You Don't Use `cn` Yet
+If you're using custom scales, pass the same options:
 
 ```ts
 // lib/utils.ts
-import { extendTailwindMerge } from 'tailwind-merge'
-import { withFluidTypography } from 'fluid-typography/merge'
+import { extendTailwindMerge } from "tailwind-merge";
+import { getFluidTypographyMergeConfig } from "fluid-typography/merge";
 
-export const cn = extendTailwindMerge(withFluidTypography)
+const twMerge = extendTailwindMerge(
+  getFluidTypographyMergeConfig({
+    customScales: {
+      'hero': { size: [50, 80] }
+    }
+  })
+);
+
+export function cn(...inputs: ClassValue[]) {
+    return twMerge(clsx(inputs));
+}
+```
+
+Now your custom classes merge properly:
+
+```tsx
+cn('text-hero text-h1') // => 'text-h1' ✅
+cn('text-display-xl font-bold text-body') // => 'text-body font-bold' ✅
 ```
 
 ---
@@ -131,11 +236,35 @@ export const cn = extendTailwindMerge(withFluidTypography)
 
 ### Do I need to configure anything?
 
-**No.** Just install, add to your Tailwind config, and use the classes.
+**No.** Just install, add to your Tailwind config, and use the classes. Configuration is optional.
 
 ### Can I customize the typography scale?
 
-Not in v1. This is intentionally opinionated for zero-config simplicity. If you need custom scales, create your own Tailwind plugin.
+**Yes!** Add custom scales alongside the defaults:
+
+```ts
+fluidTypography({
+  customScales: {
+    'hero': {
+      size: [50, 80],  // [minPx, maxPx]
+      fontWeight: '900'  // lineHeight and fontWeight are optional
+    }
+  }
+})
+```
+
+Your custom scales are added to the defaults, so you get both `text-hero` (custom) and `text-h1` (default).
+
+### Can I change the viewport range?
+
+**Yes!** Customize min/max viewport widths:
+
+```ts
+fluidTypography({
+  minViewportWidth: 320,   // Default: 375
+  maxViewportWidth: 1920   // Default: 1440
+})
+```
 
 ### Do I need tailwind-merge integration?
 
@@ -168,21 +297,29 @@ Yes! Use `@plugin "fluid-typography"` in your CSS file (see Quick Start above).
 Add the safelist to your config:
 
 ```ts
-import fluidTypography, { typographySafelist } from 'fluid-typography'
+import fluidTypography, { getTypographySafelist } from 'fluid-typography'
+
+const options = {
+  customScales: {
+    'hero': { size: [50, 80] }
+  }
+}
 
 export default {
-  plugins: [fluidTypography],
-  safelist: typographySafelist, // Optional: for dynamic classes
+  plugins: [fluidTypography(options)],
+  safelist: getTypographySafelist(options)  // Pass same options
 }
 ```
 
 ### How does the fluid scaling work?
 
-Uses CSS `clamp()` to scale smoothly between 375px (mobile) and 1440px (desktop):
+Uses CSS `clamp()` to scale smoothly between viewports (default: 375px mobile → 1440px desktop):
 
 ```css
-font-size: clamp(2.5rem, 1.7656rem + 3.1250vw, 4rem);
+font-size: clamp(1.75rem, 1.5739rem + 0.7512vw, 2.25rem);
 ```
+
+The formula automatically adjusts based on your `minViewportWidth` and `maxViewportWidth` settings.
 
 ---
 
@@ -191,11 +328,23 @@ font-size: clamp(2.5rem, 1.7656rem + 3.1250vw, 4rem);
 Full TypeScript support included:
 
 ```ts
-import fluidTypography, { SCALE, typographySafelist } from 'fluid-typography'
-import type { ScaleTuple } from 'fluid-typography'
+import fluidTypography, { DEFAULT_SCALE, getTypographySafelist } from 'fluid-typography'
+import type { ScaleTuple, PluginOptions, ScaleConfig } from 'fluid-typography'
 
 // Reference scale values
-const displayXL: ScaleTuple = SCALE['display-xl'] // [40, 48, 64]
+const displayXL: ScaleTuple = DEFAULT_SCALE['display-xl'] // [40, 60]
+
+// Type-safe options
+const options: PluginOptions = {
+  customScales: {
+    'hero': {
+      size: [50, 80],
+      fontWeight: '900'
+    }
+  },
+  minViewportWidth: 320,
+  maxViewportWidth: 1920
+}
 ```
 
 ---
