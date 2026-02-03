@@ -22,6 +22,12 @@
       "require": "./dist/preset.js"
     }
   },
+  "typesVersions": {
+    "*": {
+      "merge": ["./dist/merge.d.ts"],
+      "preset": ["./dist/preset.d.ts"]
+    }
+  },
   "files": [
     "dist",
     "README.md",
