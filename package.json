@@ -1,6 +1,6 @@
 {
   "name": "fluid-typography",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Fluid typography plugin for Tailwind CSS v3 and v4 with built-in tailwind-merge support",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -24,8 +24,12 @@
   },
   "typesVersions": {
     "*": {
-      "merge": ["./dist/merge.d.ts"],
-      "preset": ["./dist/preset.d.ts"]
+      "merge": [
+        "./dist/merge.d.ts"
+      ],
+      "preset": [
+        "./dist/preset.d.ts"
+      ]
     }
   },
   "files": [
