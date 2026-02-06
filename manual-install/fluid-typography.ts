@@ -1,3 +1,15 @@
+/**
+ * Fluid Typography for Tailwind CSS
+ *
+ * @author Ayan Ghosh
+ * @link https://ayanghosh.in
+ * @github https://github.com/typescript-any/fluid-typography
+ * @docs https://fluid-typography.ayanghosh.in
+ *
+ * Responsive typography that scales smoothly between viewports using CSS clamp().
+ * Works with Tailwind CSS v3 and v4.
+ */
+
 import plugin from "tailwindcss/plugin";
 
 /**
