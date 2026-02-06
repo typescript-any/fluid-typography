@@ -318,3 +318,157 @@ export default plugin.withOptions<PluginOptions>(
  * @deprecated Use DEFAULT_SCALE instead
  */
 export const SCALE = DEFAULT_SCALE;
+
+// ============================================================================
+// MERGE FEATURE - tailwind-merge Configuration
+// ============================================================================
+
+/**
+ * Get merged scale keys including custom scales
+ */
+function getMergedScaleKeys(options?: PluginOptions): string[] {
+  const defaultKeys = Object.keys(DEFAULT_SCALE);
+
+  if (!options?.customScales) {
+    return defaultKeys;
+  }
+
+  const customKeys = Object.keys(options.customScales);
+  return [...defaultKeys, ...customKeys];
+}
+
+/**
+ * Generate tailwind-merge configuration for fluid typography classes
+ *
+ * This eliminates the need for users to manually configure tailwind-merge
+ * to handle typography utility classes.
+ *
+ * @example
+ * ```ts
+ * import { extendTailwindMerge } from 'tailwind-merge'
+ * import { getFluidTypographyMergeConfig } from './fluidTypography'
+ *
+ * const twMerge = extendTailwindMerge(getFluidTypographyMergeConfig())
+ *
+ * // Now this works correctly:
+ * twMerge('text-body text-h1') // => 'text-h1'
+ * ```
+ */
+export function getFluidTypographyMergeConfig(options?: PluginOptions) {
+  const scaleKeys = getMergedScaleKeys(options);
+  return {
+    extend: {
+      classGroups: {
+        "font-size": [
+          // Add all typography classes to the font-size group
+          // This ensures they properly conflict with each other and built-in text utilities
+          ...scaleKeys.map((key) => `text-${key}`),
+        ],
+      },
+    },
+  };
+}
+
+/**
+ * Backward compatibility: default merge config without options
+ * @deprecated Use getFluidTypographyMergeConfig() instead
+ */
+export const withFluidTypography = {
+  extend: {
+    classGroups: {
+      "font-size": [
+        // Add all typography classes to the font-size group
+        // This ensures they properly conflict with each other and built-in text utilities
+        ...Object.keys(DEFAULT_SCALE).map((key) => `text-${key}`),
+      ],
+    },
+  },
+};
+
+// ============================================================================
+// PRESET FEATURE - Expose Theme Values
+// ============================================================================
+
+/**
+ * Get merged scale including custom scales for preset
+ */
+function getMergedScaleForPreset(
+  options?: PluginOptions,
+): Record<string, ScaleTuple> {
+  if (!options?.customScales) {
+    return { ...DEFAULT_SCALE };
+  }
+
+  const customScaleTuples: Record<string, ScaleTuple> = {};
+  for (const [key, config] of Object.entries(options.customScales)) {
+    customScaleTuples[key] = config.size;
+  }
+
+  return {
+    ...DEFAULT_SCALE,
+    ...customScaleTuples,
+  };
+}
+
+/**
+ * Tailwind preset with fluid typography theme configuration
+ *
+ * For advanced users who want to access the theme values directly
+ * or extend them with additional scales.
+ *
+ * @example
+ * ```ts
+ * import { getFluidTypographyPreset } from './fluidTypography'
+ *
+ * export default {
+ *   presets: [getFluidTypographyPreset()],
+ *   // ... your config
+ * }
+ * ```
+ */
+export function getFluidTypographyPreset(options?: PluginOptions) {
+  const scale = getMergedScaleForPreset(options);
+  return {
+    theme: {
+      extend: {
+        // Expose scale as theme values for reference
+        // Users can access via theme('fluidTypography.display')
+        fluidTypography: scale,
+      },
+    },
+  };
+}
+
+/**
+ * Backward compatibility: preset without options
+ * @deprecated Use getFluidTypographyPreset() instead
+ */
+export const fluidTypographyPreset = {
+  theme: {
+    extend: {
+      // Expose scale as theme values for reference
+      // Users can access via theme('fluidTypography.display')
+      fluidTypography: DEFAULT_SCALE,
+    },
+  },
+};
+
+/**
+ * Get the fluid typography scale object
+ * Useful for extending or customizing the scale
+ *
+ * @example
+ * ```ts
+ * import { getFluidTypographyScale } from './fluidTypography'
+ *
+ * const customScale = {
+ *   ...getFluidTypographyScale(),
+ *   'custom-xl': [50, 80]
+ * }
+ * ```
+ */
+export function getFluidTypographyScale(
+  options?: PluginOptions,
+): Record<string, ScaleTuple> {
+  return getMergedScaleForPreset(options);
+}
