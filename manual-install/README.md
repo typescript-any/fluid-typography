@@ -4,7 +4,7 @@ Don't want to install via npm? Copy this file directly into your project.
 
 ## Setup
 
-1. Copy `fluidTypography.ts` to your project (e.g., `lib/`, `utils/`, or `config/`)
+1. Copy `fluid-typography.ts` to your project (e.g., `lib/`, `utils/`, or `config/`)
 
 2. Import and add to your Tailwind config:
 
@@ -12,7 +12,7 @@ Don't want to install via npm? Copy this file directly into your project.
 
 ```ts
 // tailwind.config.ts
-import fluidTypography from "./lib/fluidTypography"; // Adjust path
+import fluidTypography from "./lib/fluid-typography"; // Adjust path
 
 export default {
   plugins: [fluidTypography],
@@ -23,7 +23,7 @@ export default {
 
 ```ts
 // tailwind.config.ts
-import fluidTypography from "./lib/fluidTypography"; // Adjust path
+import fluidTypography from "./lib/fluid-typography"; // Adjust path
 
 export default {
   plugins: [fluidTypography],
@@ -46,7 +46,7 @@ Use in your components:
 Pass options to customize scales and viewport ranges:
 
 ```ts
-import fluidTypography from "./lib/fluidTypography";
+import fluidTypography from "./lib/fluid-typography";
 
 export default {
   plugins: [
@@ -72,7 +72,7 @@ Use with `tailwind-merge` to properly handle class conflicts:
 
 ```ts
 import { extendTailwindMerge } from "tailwind-merge";
-import { getFluidTypographyMergeConfig } from "./lib/fluidTypography";
+import { getFluidTypographyMergeConfig } from "./lib/fluid-typography";
 
 const twMerge = extendTailwindMerge(getFluidTypographyMergeConfig());
 
@@ -97,7 +97,7 @@ const twMerge = extendTailwindMerge(
 Use as a Tailwind preset to expose scale values in your theme:
 
 ```ts
-import { getFluidTypographyPreset } from "./lib/fluidTypography";
+import { getFluidTypographyPreset } from "./lib/fluid-typography";
 
 export default {
   presets: [getFluidTypographyPreset()],
@@ -124,7 +124,7 @@ export const config: Config = {
 Get just the scale object:
 
 ```ts
-import { getFluidTypographyScale } from "./lib/fluidTypography";
+import { getFluidTypographyScale } from "./lib/fluid-typography";
 
 const customScale = {
   ...getFluidTypographyScale(),
