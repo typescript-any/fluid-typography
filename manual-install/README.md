@@ -21,6 +21,8 @@ export default {
 
 ### Tailwind v4
 
+#### Option 1: Config File (TypeScript)
+
 ```ts
 // tailwind.config.ts
 import fluidTypography from "./lib/fluid-typography"; // Adjust path
@@ -29,6 +31,16 @@ export default {
   plugins: [fluidTypography],
 };
 ```
+
+#### Option 2: CSS File (@plugin)
+
+```css
+/* app.css */
+@import "tailwindcss";
+@plugin "./lib/fluid-typography.ts";
+```
+
+**Note:** Both `.ts` and `.js` files work with the `@plugin` directive.
 
 ## Usage
 
